@@ -99,8 +99,10 @@ export class AppComponent implements OnInit {
   //injecting the HeroService instead of creating new instances of the service which would render it inflexible 
   constructor(private heroService: HeroService) {}
 
-  getHeroes(): Hero[] {
-    return this.heroService.getHeroes();
+  getHeroes(): void {
+    //the results will be displayed when the promises are resolved
+    //arrow functions are used here
+    this.heroService.getHeroes().then(heroes => this.heroes = heroes)
   }
 }
 

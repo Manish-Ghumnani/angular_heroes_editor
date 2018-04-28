@@ -28,7 +28,10 @@ var AppComponent = (function () {
         this.selectedHero = hero;
     };
     AppComponent.prototype.getHeroes = function () {
-        return this.heroService.getHeroes();
+        var _this = this;
+        //the results will be displayed when the promises are resolved
+        //arrow functions are used here
+        this.heroService.getHeroes().then(function (heroes) { return _this.heroes = heroes; });
     };
     return AppComponent;
 }());

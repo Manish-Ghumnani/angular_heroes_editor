@@ -11,9 +11,17 @@ var mock_heroes_1 = require("./mock-heroes");
 var HeroService = (function () {
     function HeroService() {
     }
+    //for async callback e.g. a server may take time to give back the results, we use Promises in Angular and the results are displayed when they are resolved
     HeroService.prototype.getHeroes = function () {
-        return mock_heroes_1.HEROES;
+        return Promise.resolve(mock_heroes_1.HEROES);
     }; //stub
+    HeroService.prototype.getHeroesSlowly = function () {
+        var _this = this;
+        return new Promise(function (resolve) {
+            // Simulate server latency with 2 second delay
+            setTimeout(function () { return resolve(_this.getHeroes()); }, 5000);
+        });
+    };
     return HeroService;
 }());
 HeroService = __decorate([
