@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Hero } from './hero';
 
 @Component({
   selector: 'my-app',
@@ -14,14 +15,9 @@ import { Component } from '@angular/core';
                 <span class="badge">{{hero.id}}</span> {{hero.name}}
               </li>
             </ul>
-            <!-- if not null -->
-            <div *ngIf="selectedHero">
-            <h2>{{selectedHero.name}}</h2> details
-            <div><label>id: </label>{{selectedHero.id}} </div>
-            <div><label>name: </label> {{selectedHero.name}} &nbsp;
-            <input [(ngModel)]= "selectedHero.name" placeholder="name">    
-            </div>
-            </div>
+
+            <!-- Now every time the selectedHero changes, the HeroDetailComponent gets a new hero to display. -->
+            <hero-detail [hero]="selectedHero"></hero-detail>
             `,
     styles: [`
             .selected {
@@ -93,11 +89,7 @@ export class AppComponent  {
 }
 
 
-//Hero class
-export class Hero {
-  id: number;
-  name: string;
-}
+
 
 //Heroes array
 const HEROES: Hero[] = [
