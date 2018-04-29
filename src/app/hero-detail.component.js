@@ -10,11 +10,33 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 //to define a Component, we have to import the Component symbol
 var core_1 = require("@angular/core");
+var router_1 = require("@angular/router");
+var common_1 = require("@angular/common");
+var hero_service_1 = require("./hero.service");
 var hero_1 = require("./hero");
+require("rxjs/add/operator/switchMap");
 var HeroDetailComponent = (function () {
-    //always export a component class, because we will use it else where
-    function HeroDetailComponent() {
+    function HeroDetailComponent(heroService, route, 
+        //the location service maintains the browser history stack and can be used to get the last url visited
+        location) {
+        this.heroService = heroService;
+        this.route = route;
+        this.location = location;
     }
+    //Inside the ngOnInit() lifecycle hook, we use the paramMap Observable to extract the id parameter value from
+    //the ActivatedRoute service and use the HeroService to fetch the hero with that id
+    //Also, here the JS '+' operator to convert the id which is in string format to a 'number'
+    //The subscriptions are cleaned up when the component is destroyed, so we don't need to unsubscribe
+    HeroDetailComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.route.paramMap
+            .switchMap(function (params) { return _this.heroService.getHero(+params.get('id')); })
+            .subscribe(function (hero) { return _this.hero = hero; });
+    };
+    //to go back on step
+    HeroDetailComponent.prototype.goBack = function () {
+        this.location.back();
+    };
     return HeroDetailComponent;
 }());
 __decorate([
@@ -24,8 +46,11 @@ __decorate([
 HeroDetailComponent = __decorate([
     core_1.Component({
         selector: 'hero-detail',
-        template: "\n            <!-- if not null -->\n            <div *ngIf=\"hero\">\n                <h2>{{hero.name}}</h2> details\n                <div><label>id: </label>{{hero.id}} </div>\n                <div><label>name: </label> {{hero.name}} &nbsp;\n                <input [(ngModel)]= \"hero.name\" placeholder=\"name\">    \n                </div>\n            </div>\n    "
-    })
+        templateUrl: './hero-detail.component.html'
+    }),
+    __metadata("design:paramtypes", [hero_service_1.HeroService,
+        router_1.ActivatedRoute,
+        common_1.Location])
 ], HeroDetailComponent);
 exports.HeroDetailComponent = HeroDetailComponent;
 //# sourceMappingURL=hero-detail.component.js.map

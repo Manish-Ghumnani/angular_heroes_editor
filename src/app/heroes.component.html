@@ -1,0 +1,17 @@
+<h2>My Heroes</h2>
+            <ul class="heroes">
+              <!-- here the * indicates that li and its children constitute a master template and li iterates over each hero instance in the array -->
+              <li *ngFor="let hero of heroes" 
+              [class.selected] = "hero === selectedHero"
+              (click)="onSelect(hero)">   
+                <span class="badge">{{hero.id}}</span> {{hero.name}}
+              </li>
+            </ul>
+
+            <div *ngIf="selectedHero">
+            <h2>
+              <!-- The 'uppercase' after the pipe symbol renders the name in Capital Letters -->
+              {{selectedHero.name | uppercase}} is my hero
+            </h2>
+            <button (click)="gotoDetail()">View Details</button>
+        </div>

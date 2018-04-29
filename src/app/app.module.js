@@ -5,11 +5,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+//module imports
 var core_1 = require("@angular/core");
 var platform_browser_1 = require("@angular/platform-browser");
 var forms_1 = require("@angular/forms"); // we get NgModel from this
 var hero_detail_component_1 = require("./hero-detail.component");
+var app_routing_module_1 = require("./app-routing.module");
+//component imports
 var app_component_1 = require("./app.component");
+var heroes_component_1 = require("./heroes.component");
+var hero_service_1 = require("./hero.service");
+var dashboard_component_1 = require("./dashboard.component");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -17,11 +23,14 @@ var AppModule = (function () {
 }());
 AppModule = __decorate([
     core_1.NgModule({
-        imports: [platform_browser_1.BrowserModule, forms_1.FormsModule //import befor FormsModule before binding with [(ngModel)] 
+        imports: [platform_browser_1.BrowserModule, forms_1.FormsModule, app_routing_module_1.AppRoutingModule //import befor FormsModule before binding with [(ngModel)] 
         ],
         // A component must be declared in a module before other components can reference it
-        declarations: [app_component_1.AppComponent, hero_detail_component_1.HeroDetailComponent],
-        bootstrap: [app_component_1.AppComponent]
+        declarations: [app_component_1.AppComponent, hero_detail_component_1.HeroDetailComponent, heroes_component_1.HeroesComponent, dashboard_component_1.DashboardComponent],
+        bootstrap: [app_component_1.AppComponent],
+        //this tells Angular to create a fresh instance of the service, when it creates an AppComponent
+        //being in the ngModule, means this is a singleton instance
+        providers: [hero_service_1.HeroService]
     })
 ], AppModule);
 exports.AppModule = AppModule;
