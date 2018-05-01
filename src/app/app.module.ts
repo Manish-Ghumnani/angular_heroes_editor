@@ -5,6 +5,13 @@ import { FormsModule, FormArray } from '@angular/forms';  // we get NgModel from
 import { HeroDetailComponent } from './hero-detail.component';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
+import { HttpModule } from '@angular/http';
+import { HeroSearchComponent } from './hero-search.component';
+
+//Imports for loading & configuring the in-memory web api
+//rather that using a real server we will use the in memory web api alternative which simulates the web api
+import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { InMemoryDataService }  from './in-memory-data.service';
 
 //component imports
 import { AppComponent }  from './app.component';
@@ -13,8 +20,10 @@ import { HeroService } from './hero.service';
 import { DashboardComponent } from './dashboard.component'
 
 @NgModule({
-  imports:      [ BrowserModule, FormsModule, AppRoutingModule //import befor FormsModule before binding with [(ngModel)] 
-  
+  //until you put the module in this array, it won't be visible to other components
+  imports:      [ BrowserModule, 
+                  FormsModule//import befor FormsModule before binding with [(ngModel)] 
+                  ,AppRoutingModule, HttpModule, InMemoryWebApiModule.forRoot(InMemoryDataService)
   //commmented after all routing configurations were moved to the app-routing module
   // //forRoot is called becaues a configured router is provided at the app's root - it performs the initial navigation
   // //it is passed the array which contains the paths and components which define the routes
@@ -44,7 +53,7 @@ import { DashboardComponent } from './dashboard.component'
   // ])
 ],
   // A component must be declared in a module before other components can reference it
-  declarations: [ AppComponent, HeroDetailComponent, HeroesComponent, DashboardComponent ],  //this array contains a list of application components, pipes, and directives that belong to the module
+  declarations: [ AppComponent, HeroDetailComponent, HeroesComponent, DashboardComponent, HeroSearchComponent ],  //this array contains a list of application components, pipes, and directives that belong to the module
   bootstrap:    [ AppComponent ],
   
   //this tells Angular to create a fresh instance of the service, when it creates an AppComponent

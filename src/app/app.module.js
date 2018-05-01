@@ -11,6 +11,12 @@ var platform_browser_1 = require("@angular/platform-browser");
 var forms_1 = require("@angular/forms"); // we get NgModel from this
 var hero_detail_component_1 = require("./hero-detail.component");
 var app_routing_module_1 = require("./app-routing.module");
+var http_1 = require("@angular/http");
+var hero_search_component_1 = require("./hero-search.component");
+//Imports for loading & configuring the in-memory web api
+//rather that using a real server we will use the in memory web api alternative which simulates the web api
+var angular_in_memory_web_api_1 = require("angular-in-memory-web-api");
+var in_memory_data_service_1 = require("./in-memory-data.service");
 //component imports
 var app_component_1 = require("./app.component");
 var heroes_component_1 = require("./heroes.component");
@@ -23,10 +29,14 @@ var AppModule = (function () {
 }());
 AppModule = __decorate([
     core_1.NgModule({
-        imports: [platform_browser_1.BrowserModule, forms_1.FormsModule, app_routing_module_1.AppRoutingModule //import befor FormsModule before binding with [(ngModel)] 
+        //until you put the module in this array, it won't be visible to other components
+        imports: [platform_browser_1.BrowserModule,
+            forms_1.FormsModule //import befor FormsModule before binding with [(ngModel)] 
+            ,
+            app_routing_module_1.AppRoutingModule, http_1.HttpModule, angular_in_memory_web_api_1.InMemoryWebApiModule.forRoot(in_memory_data_service_1.InMemoryDataService)
         ],
         // A component must be declared in a module before other components can reference it
-        declarations: [app_component_1.AppComponent, hero_detail_component_1.HeroDetailComponent, heroes_component_1.HeroesComponent, dashboard_component_1.DashboardComponent],
+        declarations: [app_component_1.AppComponent, hero_detail_component_1.HeroDetailComponent, heroes_component_1.HeroesComponent, dashboard_component_1.DashboardComponent, hero_search_component_1.HeroSearchComponent],
         bootstrap: [app_component_1.AppComponent],
         //this tells Angular to create a fresh instance of the service, when it creates an AppComponent
         //being in the ngModule, means this is a singleton instance

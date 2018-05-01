@@ -41,5 +41,11 @@ ngOnInit(): void{
 goBack() : void {
     this.location.back();
 }
+
+//persist the changes
+save(): void{
+    this.heroService.update(this.hero)
+    .then(() => this.goBack());
+}
 }
 
